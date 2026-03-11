@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd \"E:/桌面/claude/cugb-format/packages/format-config\" && npx jest 2>&1)",
+      "Bash(cd \"E:/桌面/claude/cugb-format\" && npm run test 2>&1)",
+      "Bash(cd \"E:/桌面/claude/cugb-format\" && npx lerna run test 2>&1)"
+    ]
+  }
+}

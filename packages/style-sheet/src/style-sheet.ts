@@ -7,11 +7,11 @@ export class StyleSheet implements IStyleSheet
 {
     private m_StyleSheet: { [index: string]: IStyleSheetItem } = {};
 
-    constructor({ styles_xml, document_xml }: { styles_xml: string, document_xml: string })
+    constructor({ styles_xml, document_xml, styleNameMap }: { styles_xml: string, document_xml: string, styleNameMap?: { [index: string]: string } })
     {
         try
         {
-            const secretary = new StdSecretary();
+            const secretary = new StdSecretary(styleNameMap);
             secretary.UnderstandStyle(styles_xml);
 
             const body = FileToElement(document_xml).elements[0];

@@ -1,7 +1,7 @@
 import { DocxStyle } from "./docx-style";
 import { BasicType } from "./common/type";
 
-const StyleTable: { [index: string]: BasicType } = {
+const DefaultStyleTable: { [index: string]: BasicType } = {
     "heading 1": "chapter_title",
     "heading 2": "section_title",
     "heading 3": "subsection_title",
@@ -35,15 +35,17 @@ const StyleTable: { [index: string]: BasicType } = {
 
 export class StdStyle extends DocxStyle
 {
+    private m_StyleTable: { [index: string]: BasicType };
 
-    constructor(styles_xml: string)
+    constructor(styles_xml: string, styleNameMap?: { [index: string]: string })
     {
         super(styles_xml);
+        this.m_StyleTable = (styleNameMap as { [index: string]: BasicType }) || DefaultStyleTable;
     }
 
     public StyleName(style_id: string): BasicType
     {
         const native_name = super.NativeName(style_id);
-        return StyleTable[native_name] || "normal";
+        return this.m_StyleTable[native_name] || "normal";
     }
 }

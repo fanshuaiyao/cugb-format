@@ -44,8 +44,13 @@ const GardenerTable: { [index: string]: IComponentGardener } =
 
 export const MainGardener: IMainGardener =
 {
-    Graft({ style_sheet, section, secretary }: { style_sheet: IStyleSheet, section: ISection, secretary: UserSecretary }): Array<XmlComponent>
+    Graft({ style_sheet, section, secretary, sectionStyleKey, sectionHeaderId, headingStripPatterns }:
+        { style_sheet: IStyleSheet, section: ISection, secretary: UserSecretary,
+          sectionStyleKey?: string, sectionHeaderId?: string, headingStripPatterns?: Array<string> }): Array<XmlComponent>
     {
+        const secStyleKey = sectionStyleKey || "section1";
+        const secHeaderId = sectionHeaderId || "header2";
+
         const components: Array<XmlComponent> = [];
 
         for (const block of section)
@@ -53,13 +58,13 @@ export const MainGardener: IMainGardener =
             const insight = secretary.Insight(block);
             if (insight.type === "section")
             {
-                const grafted = SectionGardener.Graft({ item: style_sheet.Get("section1"), id: "header2" });
+                const grafted = SectionGardener.Graft({ item: style_sheet.Get(secStyleKey), id: secHeaderId });
                 components.push(grafted);
             }
             else
             {
                 const style = style_sheet.Get(insight.type);
-                const grafted = GardenerTable[Normalize(block.name, insight.type)].Graft({ old: Convert(block), item: style, type: insight.type });
+                const grafted = GardenerTable[Normalize(block.name, insight.type)].Graft({ old: Convert(block), item: style, type: insight.type, headingStripPatterns });
                 components.push(grafted);
             }
         }

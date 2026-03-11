@@ -3,9 +3,11 @@ import { XmlComponent, Clone, Paragraph, ParagraphProperty, Convert } from "docx
 import { IStyleSheetItem } from "style-sheet";
 import { Element, TextToParagraph, PlainText } from "xml-util";
 
+const DefaultStripPatterns = [/^.+\..+\..+\s+/,/^.+\..+\s+/,/^\d+\s*/, /^第.+章\s*/, /^#\s*/];
+
 export const DefaultGardener: IComponentGardener =
 {
-    Graft({ old, item, type }: { old: XmlComponent, item: IStyleSheetItem, type: string }): XmlComponent
+    Graft({ old, item, type, headingStripPatterns }: { old: XmlComponent, item: IStyleSheetItem, type: string, headingStripPatterns?: Array<string> }): XmlComponent
     {
         try
         {
@@ -16,7 +18,11 @@ export const DefaultGardener: IComponentGardener =
 
                 let text = PlainText(old_element);
 
-                for(const pattern of [/^.+\..+\..+\s+/,/^.+\..+\s+/,/^\d+\s*/, /^第.+章\s*/, /^#\s*/])
+                const patterns = headingStripPatterns
+                    ? headingStripPatterns.map(p => new RegExp(p))
+                    : DefaultStripPatterns;
+
+                for(const pattern of patterns)
                 {
                     if(pattern.test(text))
                     {

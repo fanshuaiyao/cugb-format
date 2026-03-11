@@ -1,12 +1,20 @@
 import { FileToElement, Element, ExtractElement } from "xml-util";
 
+const DefaultDecimalPatterns: { [index: string]: string } = {
+    "[%1]": "reference",
+    "%1、": "item",
+    "(%1)": "subitem"
+};
+
 export class DocxNumbering
 {
     protected m_Numbering: Element;
+    private m_DecimalPatterns: { [index: string]: string };
 
-    constructor(numbering_xml: string)
+    constructor(numbering_xml: string, decimalPatterns?: { [index: string]: string })
     {
         this.m_Numbering = FileToElement(numbering_xml);
+        this.m_DecimalPatterns = decimalPatterns || DefaultDecimalPatterns;
     }
 
     public NumberingType({ level, id }: { level: string, id: string })
@@ -22,17 +30,11 @@ export class DocxNumbering
 
             if (format === "decimal")
             {
-                switch (text)
+                if (text in this.m_DecimalPatterns)
                 {
-                    case "[%1]":
-                        return "reference";
-                    case "%1、":
-                        return "item";
-                    case "(%1)":
-                        return "subitem";
-                    default:
-                        return "normal";
+                    return this.m_DecimalPatterns[text];
                 }
+                return "normal";
             }
         }
         catch (error)

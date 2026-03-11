@@ -1,7 +1,7 @@
 import { DocxStyle } from "./docx-style";
 import { BasicType } from "./common/type";
 
-const StyleTable: { [index: string]: BasicType } = {
+const DefaultOutlineLevelMap: { [index: string]: BasicType } = {
     "0": "chapter_title",
     "1": "section_title",
     "2": "subsection_title"
@@ -9,10 +9,12 @@ const StyleTable: { [index: string]: BasicType } = {
 
 export class UserStyle extends DocxStyle
 {
+    private m_OutlineLevelMap: { [index: string]: BasicType };
 
-    constructor(styles_xml: string)
+    constructor(styles_xml: string, outlineLevelMap?: { [index: string]: string })
     {
         super(styles_xml);
+        this.m_OutlineLevelMap = (outlineLevelMap as { [index: string]: BasicType }) || DefaultOutlineLevelMap;
     }
 
     public StyleName(style_id: string): BasicType
@@ -21,7 +23,7 @@ export class UserStyle extends DocxStyle
         const outline_level = super.OutlineLevel(style_id);
         if (outline_level)
         {
-            return StyleTable[outline_level] || "normal";
+            return this.m_OutlineLevelMap[outline_level] || "normal";
         }
 
         //

@@ -1,0 +1,112 @@
+{
+    "meta": {
+        "id": "buaa-undergraduate",
+        "name": "北航本科毕业论文",
+        "university": "北京航空航天大学",
+        "locale": "zh-CN"
+    },
+    "templateFile": "buaa_standard",
+    "styleNameMap": {
+        "heading 1": "chapter_title",
+        "heading 2": "section_title",
+        "heading 3": "subsection_title",
+        "无编号章": "pure_chapter",
+        "无编号节": "pure_section",
+        "论文正文": "normal",
+        "图片": "figure",
+        "图片题注": "figure_caption",
+        "论文表格": "table",
+        "表格题注": "table_caption",
+        "论文公式": "formula",
+        "公式题注": "formula_caption",
+        "参考文献": "reference",
+        "款": "item",
+        "项": "subitem",
+        "中文摘要": "title_cn",
+        "中文论文作者": "author_cn",
+        "中文论文作者名": "author_name_cn",
+        "中文指导教师": "tutor_cn",
+        "中文指导教师名": "tutor_name_cn",
+        "中文摘要字面值": "literal_abstract_cn",
+        "中文关键词字面值": "literal_keywords_cn",
+        "英文摘要": "title_en",
+        "英文论文作者": "author_en",
+        "英文论文作者名": "author_name_en",
+        "英文指导教师": "tutor_en",
+        "英文指导教师名": "tutor_name_en",
+        "英文摘要字面值": "literal_abstract_en",
+        "英文关键词字面值": "literal_keywords_en"
+    },
+    "outlineLevelMap": {
+        "0": "chapter_title",
+        "1": "section_title",
+        "2": "subsection_title"
+    },
+    "classification": {
+        "pureChapters": ["参考文献", "结论", "致谢", "附录", "总结与展望"],
+        "pureSections": ["结论", "总结", "论文总结", "本人工作内容", "展望"],
+        "captionPrefixes": {
+            "图": "figure_caption",
+            "表": "table_caption",
+            "公式": "formula_caption"
+        },
+        "headingPatterns": {
+            "chapter": ["^\\d+\\s+.+$", "^第.+章\\s+.+$", "^#\\s*.+$"],
+            "section": ["^\\d+\\.\\d+\\s+.+$", "^##\\s*.+$"],
+            "subsection": ["^\\d+\\.\\d+\\..+\\s+.+$", "^###\\s*.+$"]
+        },
+        "headingStripPatterns": ["^.+\\..+\\..+\\s+", "^.+\\..+\\s+", "^\\d+\\s*", "^第.+章\\s*", "^#\\s*"]
+    },
+    "frontMatter": {
+        "metaSentinels": {
+            "title": "论文题目：",
+            "author": "学生：",
+            "tutor": "指导教师："
+        },
+        "abstractBoundaries": {
+            "cn": { "start": "摘要", "end": "关键字：" },
+            "en": { "start": "Abstract", "end": "Keywords:" }
+        },
+        "keywordsPrefixes": {
+            "cn": "关键字：",
+            "en": "Keywords:"
+        },
+        "defaults": {
+            "title_cn": "未识别的标题",
+            "title_en": "unknown title",
+            "author_cn": "未识别的作者",
+            "author_en": "unknown author",
+            "tutor_cn": "未识别的指导教师",
+            "tutor_en": "unknown tutor"
+        }
+    },
+    "sections": {
+        "sectionMap": {
+            "abstract_toc": 0,
+            "main": 1
+        },
+        "sectionStyleKeys": {
+            "abstract_toc": { "styleKey": "section0", "headerId": "header1" },
+            "main": { "styleKey": "section1", "headerId": "header2" }
+        }
+    },
+    "numbering": {
+        "decimalPatterns": {
+            "[%1]": "reference",
+            "%1、": "item",
+            "(%1)": "subitem"
+        }
+    },
+    "postProcessing": {
+        "textReplacements": [
+            {
+                "find": "<w:rPr/><w:t>\u201c</w:t>",
+                "replace": "<w:rPr><w:rFonts w:hint=\"eastAsia\"/></w:rPr><w:t>\u201c</w:t>"
+            },
+            {
+                "find": "<w:rPr/><w:t>\u201d</w:t>",
+                "replace": "<w:rPr><w:rFonts w:hint=\"eastAsia\"/></w:rPr><w:t>\u201d</w:t>"
+            }
+        ]
+    }
+}
