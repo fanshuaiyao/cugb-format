@@ -25,7 +25,7 @@ export abstract class Secretary
                 .find(e => e.name === "w:pPr").elements
                 .find(e => e.name === "w:pStyle");
 
-            const style_id = Get(pStyle, ["attributes", "w:val"], "");
+            const style_id = Get(pStyle, ["attributes", "w:val"], "") as string;
             return this.m_DocxStyle.StyleName(style_id);
 
         }

@@ -180,7 +180,7 @@ export class UserSecretary extends Secretary
             const id = numPr.elements.find(e => e.name === "w:numId").attributes["w:val"] as string;
             const type = this.m_DocxNumbering.NumberingType({ level, id });
 
-            return type;
+            return type as insight_type;
 
         }
         catch (error)
